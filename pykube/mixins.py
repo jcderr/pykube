@@ -13,6 +13,23 @@ class ReplicatedMixin(object):
     def replicas(self, value):
         self.obj["spec"]["replicas"] = value
 
+    @property
+    def image(self):
+        _images = {}
+        for container in self.obj["spec"]["template"]["spec"]["containers"]:
+            _images[container['name']] = container['image']
+
+        return _images
+
+    @image.setter
+    def image(self, value):
+        for container in self.obj["spec"]["template"]["spec"]["containers"]:
+            container_name = value['container-name']
+            image_name = value['image-name']
+            if container['name'] == container_name:
+                container["image"] = image_name
+        self.update()
+
 
 class ScalableMixin(object):
 
