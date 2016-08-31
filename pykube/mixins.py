@@ -30,6 +30,7 @@ class ReplicatedMixin(object):
                 container["image"] = image_name
         self.update()
 
+
 class ScalableMixin(object):
 
     @property
